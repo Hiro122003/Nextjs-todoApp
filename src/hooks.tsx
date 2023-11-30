@@ -10,7 +10,7 @@
 //   useState,
 // } from "react";
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
-// import { auth, db } from "../../firebase";
+// import { auth, db } from "../firebase";
 // import {
 //   Timestamp,
 //   collection,
@@ -28,24 +28,9 @@
 //   createdAt: Timestamp;
 // };
 
-// type TodoProviderProps = {
-//   children: ReactNode;
-// };
-
-// type TodoFunctionProps = {
-//   todos: Todo[];
-// };
-
-// const defalutFunction = {
-//   todos: [],
-// };
-
-// const TodoFunction = createContext<TodoFunctionProps>(defalutFunction);
-
-// export function FunctionProvider({ children }: TodoProviderProps) {
+// export const useTodoData = () => {
 //   const [todos, setTodos] = useState<Todo[]>([]);
 
-//   // ファイアベースからすべてのデータの読み込み
 //   useEffect(() => {
 //     const fetchDate = async () => {
 //       const todosDataRef = collection(db, "todos");
@@ -68,20 +53,9 @@
 //     fetchDate();
 //   }, []);
 
-// //   useEffect(() => {
-// //     console.log(todos);
-// //   }, [todos]);
+//   useEffect(() => {
+//     console.log(`hooksのtodos:  ${todos}`);
+//   }, [todos]);
 
-
-//   const value = {
-//     todos,
-// }
-// return <TodoFunction.Provider value={value}>{children}</TodoFunction.Provider>;
-
-// }
-
-// export function useFunctionContext() {
-//     return useContext(TodoFunction);
-//   }
-  
-
+//   return { todos };
+// };

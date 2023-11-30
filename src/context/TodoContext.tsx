@@ -20,13 +20,13 @@ import {
   query,
 } from "firebase/firestore";
 
-export type Todo = {
-    id: string;
-    title: string;
-    content: string;
-    status: string;
-    createdAt: Timestamp;
-  };
+// export type Todo = {
+//     id: string;
+//     title: string;
+//     content: string;
+//     status: string;
+//     createdAt: Timestamp;
+//   };
 
 type TodoProviderProps = {
   children: ReactNode;
@@ -35,13 +35,13 @@ type TodoProviderProps = {
 type TodoContextType = {
   user: User | null;
   userId: string | null;
-  todos:Todo[];
+  // todos:Todo[];
 };
 
 const defaultData = {
   user: null,
   userId: null,
-  todos:[],
+  // todos:[],
 };
 
 
@@ -53,7 +53,7 @@ export function TodoProvider({ children }: TodoProviderProps) {
 
   const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
-  const [todos, setTodos] = useState<Todo[]>([]);
+  // const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (newUser) => {
@@ -71,31 +71,31 @@ export function TodoProvider({ children }: TodoProviderProps) {
   }, []);
 
   // ファイアベースからすべてのデータの読み込み
-  useEffect(() => {
-    const fetchDate = async() => {
-      const todosDataRef = collection(db, "todos");
-      const q = query(todosDataRef, orderBy("createdAt", "desc")); //新しい順にデータの表示
+  // useEffect(() => {
+  //   const fetchDate = async() => {
+  //     const todosDataRef = collection(db, "todos");
+  //     const q = query(todosDataRef, orderBy("createdAt", "desc")); //新しい順にデータの表示
 
-      const unsbscribe = onSnapshot(q, (snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.data().id,
-          title: doc.data().title,
-          content: doc.data().content,
-          status: doc.data().status,
-          createdAt: doc.data().createdAt,
-        }));
-        setTodos(data);
-      });
-      return () => {
-        unsbscribe();
-      };
-    };
-    fetchDate();
-  }, []);
+  //     const unsbscribe = onSnapshot(q, (snapshot) => {
+  //       const data = snapshot.docs.map((doc) => ({
+  //         id: doc.data().id,
+  //         title: doc.data().title,
+  //         content: doc.data().content,
+  //         status: doc.data().status,
+  //         createdAt: doc.data().createdAt,
+  //       }));
+  //       setTodos(data);
+  //     });
+  //     return () => {
+  //       unsbscribe();
+  //     };
+  //   };
+  //   fetchDate();
+  // }, []);
 
-  useEffect(() => {
-    console.log(`context内のtodos:  ${todos}`);
-  }, [todos]);
+  // useEffect(() => {
+  //   console.log(`context内のtodos:  ${todos}`);
+  // }, [todos]);
 
 
 
@@ -103,7 +103,7 @@ export function TodoProvider({ children }: TodoProviderProps) {
   const value = {
     user,
     userId,
-    todos,
+    // todos,
   };
 
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;

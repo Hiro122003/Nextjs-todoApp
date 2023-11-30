@@ -1,39 +1,59 @@
-import React from 'react'
-import Link from "next/link";
-import { useTodoContext } from '@/context/TodoContext';
+"use client";
 
-const TodoList = () => {
-    // const { userId,todos } = useTodoContext();
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useTodoContext } from "@/context/TodoContext";
+import { db } from "../../../firebase";
+// import { Todo, useTodoData } from '@/hooks';
+import {
+  Timestamp,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { Todo } from "../page";
+
+
+type TodoListProps = {
+  todo:Todo
+}
+
+const TodoList = ({todo}:TodoListProps) => {
+  // const { userId,todos } = useTodoContext(); //Error: (0 , _hooks__WEBPACK_IMPORTED_MODULE_3__.useTodoData) is not a function
+
+  // const {todos} = useTodoData() //Error: (0 , _hooks__WEBPACK_IMPORTED_MODULE_3__.useTodoData) is not a function
+  // console.log(todos)
+
+  
 
   return (
     <div className="bg-slate-100 text-gray-700 rounded-md shadow-xl p-4 md:h-50 custom-box mb-4 md:mb-0">
-          <h2 className="text-xl font-extrabold mb-2">
-            <Link href="#">fuck Matsumoto</Link>
-          </h2>
-          <small className="text-sm font-semibold">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo
-            necessitatibus tempora ut blanditiis totam cum minus voluptate non
-            eligendi autem?...
-          </small>
-          <Link href="#" className="text-sm">
-            続きを読む
-          </Link>
-          <div className="flex justify-between mt-2">
-            <p className="text-sm font-semibold">状況：未着手</p>
-          </div>
-          <div className="flex justify-end gap-1.5 items-center relative">
-            <small className="inline-block absolute left-0">
-              投稿日：2023/11/30
-            </small>
-            <button className="bg-blue-500 px-2 py-1 rounded-md text-gray-100">
-              編集
-            </button>
-            <button className="bg-red-500 px-2 py-1 rounded-md text-gray-100">
-              削除
-            </button>
-          </div>
-        </div>
-  )
-}
+      <h2 className="text-xl font-extrabold mb-2">
+        <Link href="#">{todo.title}</Link>
+      </h2>
+      <small className="text-sm font-semibold">
+        {todo.content.length >70 ? todo.content.substring(0,70) + '...':todo.content}
+      </small>
+      <Link href="#" className="text-sm">
+        続きを読む
+      </Link>
+      <div className="flex justify-between mt-2">
+        <p className="text-sm font-semibold">{`状況：${todo.status}`}</p>
+      </div>
+      <div className="flex justify-end gap-1.5 items-center relative">
+        <small className="inline-block absolute left-0">
+          {`投稿日：${todo.createdAt.toDate().toLocaleDateString()}`}
+        </small>
+        <button className="bg-blue-500 px-2 py-1 rounded-md text-gray-100">
+          編集
+        </button>
+        <button className="bg-red-500 px-2 py-1 rounded-md text-gray-100">
+          削除
+        </button>
+      </div>
+    </div>
+  );
+};
 
-export default TodoList
+export default TodoList;

@@ -8,9 +8,8 @@ import { auth } from "../../../firebase";
 import { useTodoContext } from "@/context/TodoContext";
 
 const Header = () => {
-  const { userId,todos } = useTodoContext();
-  console.log(todos) 
-  
+  // const { userId,todos } = useTodoContext();
+  // console.log(todos)
 
   const pathName = usePathname();
   //   console.log(pathName); //=>/todo/register
@@ -34,9 +33,11 @@ const Header = () => {
   return (
     <header className="w-full border-b py-4 px-10  flex flex-col sm:flex sm:flex-row justify-between items-center sm:bg-red-800 md:bg-orange-500 lg:bg-blue-800 xl:bg-green-800 ">
       <div className="relative">
-        <h1 className="text-2xl sm:text-3xl font-bold md:text-4xl">
-          Todo Application 
-        </h1>
+        <Link href="/">
+          <h1 className="text-2xl sm:text-3xl font-bold md:text-4xl">
+            Todo Application
+          </h1>
+        </Link>
       </div>
       <div className="m-4">
         <nav className="gap-8 ">
@@ -54,7 +55,6 @@ const Header = () => {
           </button>
         </nav>
       </div>
-      
     </header>
   );
 };
