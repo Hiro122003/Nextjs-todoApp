@@ -5,8 +5,8 @@ import TodoList from "./components/TodoList";
 import { useTodoContext } from "@/context/TodoContext";
 
 export default function Home() {
-  const {todos} = useTodoContext;
-  console.log(todos)
+  // const {todos} = useTodoContext;
+  // console.log(todos)
 
   return (
     <main className="min-h-screen mt-10 ">
