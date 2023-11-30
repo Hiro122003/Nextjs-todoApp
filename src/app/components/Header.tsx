@@ -9,7 +9,7 @@ import { useTodoContext } from "@/context/TodoContext";
 
 const Header = () => {
   const { userId,todos } = useTodoContext();
-  console.log(todos) 
+  // console.log(todos) //Header.tsxからは取得可能
   
 
   const pathName = usePathname();
