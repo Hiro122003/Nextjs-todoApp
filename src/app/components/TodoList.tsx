@@ -8,7 +8,7 @@ const TodoList = () => {
   return (
     <div className="bg-slate-100 text-gray-700 rounded-md shadow-xl p-4 md:h-50 custom-box mb-4 md:mb-0">
           <h2 className="text-xl font-extrabold mb-2">
-            <Link href="#">fuck Matsumoto</Link>
+            <Link href="#">lorem</Link>
           </h2>
           <small className="text-sm font-semibold">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo

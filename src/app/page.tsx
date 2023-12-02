@@ -5,7 +5,8 @@ import TodoList from "./components/TodoList";
 import { useTodoContext } from "@/context/TodoContext";
 
 export default function Home() {
-  // const {todos} = useTodoContext;
+  // const {todos} = useTodoContext();
+  
   // console.log(todos)
 
   return (
