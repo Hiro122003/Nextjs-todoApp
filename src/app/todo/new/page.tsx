@@ -6,10 +6,13 @@ import { Timestamp } from "firebase/firestore";
 
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from "../../../../firebase";
+import { useRouter } from "next/navigation";
 
 
 
 const CreateNewList = () => {
+  const router = useRouter()
+
   const [title,setTitle] = useState<string>('');
   const [content,setContent] = useState<string>('');
   const [status,setStatus] = useState('未完了')
@@ -31,6 +34,8 @@ const CreateNewList = () => {
       setTitle('');
       setContent('')
       setStatus('未完了')
+      router.push('/')
+
     }catch(error:any){
       console.error(error.message)
     }

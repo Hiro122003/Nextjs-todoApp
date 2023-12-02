@@ -44,8 +44,6 @@ const defaultData = {
   // todos:[],
 };
 
-
-
 const TodoContext = createContext<TodoContextType>(defaultData);
 
 export function TodoProvider({ children }: TodoProviderProps) {
@@ -97,20 +95,18 @@ export function TodoProvider({ children }: TodoProviderProps) {
   //   console.log(`context内のtodos:  ${todos}`);
   // }, [todos]);
 
-
-
-// プロバイダーに渡す初期値
+  // プロバイダーに渡す初期値
   const value = {
     user,
     userId,
     // todos,
   };
 
-  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
+  return <TodoContext.Provider value={value}>
+    {children}
+    </TodoContext.Provider>;
 }
 
 export const useTodoContext = () => {
   return useContext(TodoContext);
-}
-
-
+};

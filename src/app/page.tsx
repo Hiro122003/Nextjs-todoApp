@@ -52,9 +52,9 @@ export default function Home() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
+  // useEffect(() => {
+  //   console.log(todos);
+  // }, [todos]);
 
   
 
