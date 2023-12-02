@@ -5,7 +5,7 @@ import TodoList from "./components/TodoList";
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useTodoContext } from "@/context/TodoContext";
+import { useAuthContext } from "@/context/AuthContext";
 import { db } from "../../firebase";
 
 import {
@@ -18,6 +18,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { useRouter } from "next/navigation";
+import { useTodoContext } from "@/context/TodoContext";
 
 export type Todo = {
   id: string;
@@ -28,35 +29,14 @@ export type Todo = {
 };
 
 export default function Home() {
-  // const {todos} = useTodoContext;
-  // console.log(todos)
+  const {todos} = useTodoContext();
+  console.log(todos)
   const router = useRouter();
 
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [sortOption,setSortOption] = useState<string>('すべて')
+  // const [todos, setTodos] = useState<Todo[]>([]);
+  const [sortOption, setSortOption] = useState<string>("すべて");
   const [sortedTodos, setSortedTodos] = useState<Todo[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const todosDataRef = collection(db, "todos");
-      const q = query(todosDataRef, orderBy("createdAt", "desc"));
-
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          title: doc.data().title,
-          content: doc.data().content,
-          status: doc.data().status,
-          createdAt: doc.data().createdAt,
-        }));
-        setTodos(data);
-      });
-      return () => {
-        unsubscribe();
-      };
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     let sorted = [...todos];
@@ -78,9 +58,9 @@ export default function Home() {
         <div className="mb-10 flex justify-evenly">
           <button className="bg-green-500 px-4 py-2 rounded-xl text-white">
             タスク状況 :
-            <select 
-            className="bg-green-500 ml-2 rounded-md text-md font-semibold outline-none"
-            onChange={(e) => setSortOption(e.target.value)}
+            <select
+              className="bg-green-500 ml-2 rounded-md text-md font-semibold outline-none"
+              onChange={(e) => setSortOption(e.target.value)}
             >
               <option value="すべて">すべて</option>
               <option value="未着手">未着手</option>
@@ -97,7 +77,10 @@ export default function Home() {
 
       <div className="md:gap-6 md:grid md:grid-cols-2 md:grid-auto-rows-[1fr]">
         {sortedTodos.map((todo) => (
-          <div key = {todo.id} className="bg-slate-100 text-gray-700 rounded-md shadow-xl p-4 md:h-50 custom-box mb-4 md:mb-0 flex flex-col">
+          <div
+            key={todo.id}
+            className="bg-slate-100 text-gray-700 rounded-md shadow-xl p-4 md:h-50 custom-box mb-4 md:mb-0 flex flex-col"
+          >
             <h2 className="text-xl font-extrabold mb-2">
               <Link href={`/todo/${todo.id}`}>{todo.title}</Link>
             </h2>

@@ -5,10 +5,14 @@ import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { getAuth, signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
+import { useAuthContext } from "@/context/AuthContext";
 import { useTodoContext } from "@/context/TodoContext";
 
 const Header = () => {
-  // const { userId,todos } = useTodoContext();
+  const { userId } = useAuthContext();
+  // console.log(userId)
+
+  const {todos} = useTodoContext();
   // console.log(todos)
 
   const pathName = usePathname();

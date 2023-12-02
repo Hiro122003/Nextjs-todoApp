@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { AuthProvider } from "@/context/AuthContext";
 import { TodoProvider } from "@/context/TodoContext";
 
 export const metadata: Metadata = {
@@ -19,11 +20,13 @@ export default function RootLayout({
     <html lang="ja">
       <body className="container mx-auto bg-slate-700 text-slate-100">
         <div className="flex flex-col">
-          <TodoProvider>
-            <Header />
-            {children}
-            <Footer />
-          </TodoProvider>
+          <AuthProvider> 
+            <TodoProvider>
+              <Header />
+              {children}
+              <Footer />
+            </TodoProvider>
+          </AuthProvider>
         </div>
       </body>
     </html>
