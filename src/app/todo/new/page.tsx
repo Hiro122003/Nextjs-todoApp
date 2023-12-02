@@ -15,7 +15,7 @@ const CreateNewList = () => {
 
   const [title,setTitle] = useState<string>('');
   const [content,setContent] = useState<string>('');
-  const [status,setStatus] = useState('未完了')
+  const [status,setStatus] = useState('未着手')
   const [createdAt, setCreatedAt] = useState(Timestamp.fromDate(new Date()))
 
   const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +33,7 @@ const CreateNewList = () => {
       });
       setTitle('');
       setContent('')
-      setStatus('未完了')
+      // setStatus('未着手')
       router.push('/')
 
     }catch(error:any){
@@ -75,8 +75,12 @@ const CreateNewList = () => {
 
         <div className="mt-4 px-4 py-2 flex flex-row items-center justify-evenly border-2 border-slate-400 rounded-xl" >
           <label className="text-slate-700 text-lg font-semibold">状況 :</label>
-          <select className="bg-green-400 ml-2 rounded-md text-md font-semibold px-7 py-3">
-            <option value="未着手">未完了</option>
+          <select 
+          value = {status}
+          className="bg-green-400 ml-2 rounded-md text-md font-semibold px-7 py-3"
+          onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="未着手">未着手</option>
             <option value="着手">着手</option>
             <option value="完了">完了</option>
           </select>
