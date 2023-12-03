@@ -1,6 +1,6 @@
 "use client";
 
-import { doc, getDoc, updateDoc,deleteDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 import React, { FormEvent, useEffect, useState } from "react";
 import { db } from "../../../../firebase";
@@ -14,8 +14,9 @@ const detailPage = ({ params }: { params: { id: string } }) => {
   const [editingTitle, setEditingTitle] = useState<string>("");
   const [editingContent, setEditingContent] = useState<string>("");
   const [detailStatus, setDetailStatus] = useState<string>("");
-  
+  const [detailCreatedAt, setDetailCreatedAt] = useState<Date>();
 
+  //  データの読み込み
   useEffect(() => {
     const idDataFetch = async () => {
       const docRef = doc(db, "todos", params.id);
@@ -24,11 +25,14 @@ const detailPage = ({ params }: { params: { id: string } }) => {
         setIdData(docSnap.data() as Todo);
         setEditingTitle(docSnap.data().title);
         setEditingContent(docSnap.data().content);
-        setDetailStatus(docSnap.data().status)
+        setDetailStatus(docSnap.data().status);
+        setDetailCreatedAt(docSnap.data().createdAt);
       } else return;
     };
     idDataFetch();
   }, [params.id]);
+
+  console.log(idData);
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,23 +49,23 @@ const detailPage = ({ params }: { params: { id: string } }) => {
 
   const deleteTodo = async (id: string) => {
     if (!id) {
-      console.error('ID is undefined');
+      console.error("ID is undefined");
       return;
     }
     const deleteRef = doc(db, "todos", id);
     try {
       await deleteDoc(deleteRef);
-      router.push('/')
+      router.push("/");
       router.refresh();
     } catch (error) {
-      console.error('Failed to delete document:', error);
+      console.error("Failed to delete document:", error);
     }
   };
 
   return (
-    <div className="flex max-w-3xl mx-auto px-10 py-10 relative h-screen">
+    <div className="flex max-w-3xl mx-auto px-10 py-10 relative h-screen ">
       <form onSubmit={submitHandler}>
-        <div className="flex-grow">
+        <div className="flex-grow border-2 border-gray-400 rounded-md shadow-xl p-4 mt-4 ">
           {editing ? (
             <div className="mx-auto mt-10 mb-10 shadow-lg ">
               <label className="text-xl block font-bold mb-3 ">
@@ -99,10 +103,10 @@ const detailPage = ({ params }: { params: { id: string } }) => {
               <label className="text-slate-100 text-lg font-semibold">
                 状況 :
               </label>
-              <select 
-              value={detailStatus} // Added this line
-              className="bg-slate-400 ml-2 rounded-md text-md font-semibold px-7 py-3"
-              onChange={(e) => setDetailStatus(e.target.value)}
+              <select
+                value={detailStatus} // Added this line
+                className="bg-slate-400 ml-2 rounded-md text-md font-semibold px-7 py-3"
+                onChange={(e) => setDetailStatus(e.target.value)}
               >
                 <option value="未着手">未着手</option>
                 <option value="着手">着手</option>
@@ -113,6 +117,14 @@ const detailPage = ({ params }: { params: { id: string } }) => {
             <div className="flex items-center mx-auto justify-start  max-w-[70%] mt-10 gap-x-4">
               <label className="text-md font-semibold ">状況:</label>
               <p className="text-xl font-bold ">{idData?.status}</p>
+            </div>
+          )}
+
+          {editing ? (
+            null
+          ) : (
+            <div className="text-lg leading-relaxed text-justify max-w-[70%] mx-auto font-semibold mt-4">
+              <p>投稿日：{idData?.createdAt.toDate().toLocaleDateString()}</p>
             </div>
           )}
 
@@ -137,8 +149,8 @@ const detailPage = ({ params }: { params: { id: string } }) => {
               >
                 編集
               </button>
-              <button 
-              className="bg-red-500 px-4 py-2 rounded-md hover:bg-red-600 duration-400"
+              <button
+                className="bg-red-500 px-4 py-2 rounded-md hover:bg-red-600 duration-400"
                 onClick={() => deleteTodo(params.id)}
               >
                 削除

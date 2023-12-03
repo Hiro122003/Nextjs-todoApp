@@ -68,32 +68,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     };
   }, []);
 
-  // ファイアベースからすべてのデータの読み込み
-  // useEffect(() => {
-  //   const fetchDate = async() => {
-  //     const todosDataRef = collection(db, "todos");
-  //     const q = query(todosDataRef, orderBy("createdAt", "desc")); //新しい順にデータの表示
-
-  //     const unsbscribe = onSnapshot(q, (snapshot) => {
-  //       const data = snapshot.docs.map((doc) => ({
-  //         id: doc.data().id,
-  //         title: doc.data().title,
-  //         content: doc.data().content,
-  //         status: doc.data().status,
-  //         createdAt: doc.data().createdAt,
-  //       }));
-  //       setTodos(data);
-  //     });
-  //     return () => {
-  //       unsbscribe();
-  //     };
-  //   };
-  //   fetchDate();
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(`context内のtodos:  ${todos}`);
-  // }, [todos]);
 
   // プロバイダーに渡す初期値
   const value = {

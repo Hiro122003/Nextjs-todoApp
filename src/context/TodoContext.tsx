@@ -48,21 +48,6 @@ export function TodoProvider({ children }: TodoProviderProps) {
 
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (newUser) => {
-  //     setUser(newUser);
-  //     setUserId(newUser ? newUser.uid : null);
-  //     // console.log(userId)
-
-  //     if (user) {
-  //       router.push("/");
-  //     }
-  //   });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
-
   // ファイアベースからすべてのデータの読み込み
   useEffect(() => {
     const fetchDate = async() => {
@@ -71,7 +56,7 @@ export function TodoProvider({ children }: TodoProviderProps) {
 
       const unsbscribe = onSnapshot(q, (snapshot) => {
         const data = snapshot.docs.map((doc) => ({
-          id: doc.data().id,
+          id: doc.id,
           title: doc.data().title,
           content: doc.data().content,
           status: doc.data().status,
@@ -86,9 +71,9 @@ export function TodoProvider({ children }: TodoProviderProps) {
     fetchDate();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(todos);
-  // }, [todos]);
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
 
   // プロバイダーに渡す初期値
   const value = {
